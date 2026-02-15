@@ -1,0 +1,726 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>LAW TALK| Blog</title>
+  <style>
+    :root{
+      /* Cream + warm brown theme */
+      --bg:#f6f1e8;              /* page background (cream) */
+      --surface:#fffaf3;         /* header/panels (off-white) */
+      --card:#ffffff;            /* card surface */
+      --text:#3e352c;            /* main text (warm dark brown) */
+      --muted:#8a7a6a;           /* muted text */
+      --line:#e6dccf;            /* borders/dividers */
+      --accent:#b08968;          /* warm light brown */
+      --accent2:#d4a373;         /* tan highlight */
+      --shadow: 0 10px 26px rgba(120, 95, 70, .10);
+      --radius:16px;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background:
+        radial-gradient(1200px 700px at 12% 0%, rgba(212,163,115,.22), transparent 55%),
+        radial-gradient(900px 600px at 90% 15%, rgba(176,137,104,.18), transparent 55%),
+        var(--bg);
+      color:var(--text);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      line-height:1.5;
+    }
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:1100px;margin:0 auto;padding:0 18px}
+
+    header{
+      position:sticky;top:0;z-index:20;
+      background: rgba(255,250,243,.94);
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid var(--line);
+    }
+    .topbar{
+      display:flex;align-items:center;justify-content:space-between;gap:14px;
+      padding:14px 0;
+    }
+
+    /* Logo area */
+    .brand{
+      display:flex;align-items:center;gap:12px;
+      min-width: 240px;
+    }
+    .logoBox{
+      width:46px;height:46px;border-radius:14px;
+      border:1px solid rgba(176,137,104,.35);
+      background: rgba(255,255,255,.75);
+      box-shadow: var(--shadow);
+      display:grid;place-items:center;
+      overflow:hidden;
+    }
+    .logoBox img{
+      width:100%;height:100%;object-fit:contain;
+      display:block;
+      padding:6px;
+    }
+    .logoMonogram{
+      width:100%;height:100%;
+      display:grid;place-items:center;
+      font-weight:850;
+      letter-spacing:.06em;
+      color:#fffaf3;
+      background: linear-gradient(135deg, rgba(176,137,104,.95), rgba(212,163,115,.92));
+    }
+
+    /* Headings in warm brown */
+    h1, h2, h3, .heroTitle, .modalTitle { color:#9c6644; }
+
+    .brand h1{
+      margin:0;
+      font-size:16px;
+      font-weight:700;
+      letter-spacing:.02em;
+      font-family: ui-serif, Georgia, "Times New Roman", Times, serif;
+      color:#9c6644;
+    }
+    .brand p{margin:0;color:var(--muted);font-size:12px}
+
+    nav{
+      display:flex;gap:14px;flex-wrap:wrap;justify-content:flex-end;
+    }
+    .navlink{
+      font-size:13px;color:var(--muted);
+      padding:8px 10px;border-radius:10px;
+      border:1px solid transparent;
+    }
+    .navlink:hover{border-color:var(--line);color:var(--text)}
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 10px;border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.65);
+      color: var(--muted);
+      font-size:12px;
+      white-space:nowrap;
+    }
+    .dot{
+      width:8px;height:8px;border-radius:999px;background: var(--accent);
+      box-shadow:0 0 0 4px rgba(176,137,104,.16);
+    }
+
+    .hero{padding:26px 0 18px}
+    .heroCard{
+      background: linear-gradient(180deg, #fffaf3, #f3e9dc);
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding:18px;
+    }
+    .heroTitle{
+      margin:0 0 6px;
+      font-size:28px;
+      font-weight:750;
+      letter-spacing:.01em;
+      font-family: ui-serif, Georgia, "Times New Roman", Times, serif;
+    }
+    .heroSub{margin:0;color:var(--muted);max-width:70ch}
+    .badgeRow{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    .badge{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:7px 10px;border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.65);
+      color: var(--muted);
+      font-size:12px;
+    }
+    .badge strong{color:var(--text);font-weight:650}
+
+    main{padding: 10px 0 34px}
+    .grid{display:grid;grid-template-columns: 1fr;gap:14px}
+    @media (min-width: 980px){ .grid{grid-template-columns: 360px 1fr;} }
+
+    .card{
+      background: rgba(255,255,255,.78);
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding:14px;
+    }
+    .card h3{
+      margin:0 0 10px;
+      font-size:14px;
+      letter-spacing:.03em;
+      text-transform: uppercase;
+      color: #a07455; /* light brown heading */
+      font-weight:800;
+    }
+
+    label{display:block;font-size:12px;color: var(--muted);margin: 10px 0 6px}
+    input, select, textarea{
+      width:100%;
+      padding:10px 11px;
+      border-radius: 12px;
+      border:1px solid var(--line);
+      background: rgba(255,250,243,.92);
+      color: var(--text);
+      outline:none;
+    }
+    textarea{min-height:120px;resize:vertical}
+    input:focus, select:focus, textarea:focus{
+      border-color: rgba(176,137,104,.75);
+      box-shadow: 0 0 0 4px rgba(176,137,104,.14);
+    }
+
+    .row{display:flex;gap:10px}
+    .row>*{flex:1}
+    .divider{height:1px;background:var(--line);margin:12px 0}
+    .hint{font-size:12px;color:var(--muted);line-height:1.4}
+
+    button{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.65);
+      color: var(--text);
+      padding:10px 12px;
+      border-radius: 12px;
+      cursor:pointer;
+      font-weight:650;
+      letter-spacing:.01em;
+    }
+    button:hover{filter:brightness(1.03)}
+
+    .primary{
+      background: linear-gradient(135deg, #b08968, #d4a373);
+      border-color: rgba(176,137,104,.65);
+      color: #fffaf3;
+    }
+    .danger{
+      background: rgba(180, 80, 80, .12);
+      border-color: rgba(180, 80, 80, .28);
+      color: var(--text);
+    }
+    .ghost{background: transparent}
+    .small{font-size:12px;color:var(--muted)}
+
+    .post{
+      background: rgba(255,250,243,.92);
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      padding:14px;
+      transition: transform .08s ease, border-color .08s ease;
+    }
+    .post:hover{transform: translateY(-1px);border-color: rgba(176,137,104,.38)}
+    .post h2{
+      margin:0 0 6px;
+      font-size:20px;
+      font-weight:750;
+      font-family: ui-serif, Georgia, "Times New Roman", Times, serif;
+      color:#9c6644;
+    }
+    .meta{
+      margin:0 0 10px;
+      color: var(--muted);
+      font-size:12px;
+      display:flex;gap:10px;flex-wrap:wrap;align-items:center;
+    }
+    .tag{
+      display:inline-flex;align-items:center;
+      padding:5px 10px;border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.7);
+      color: var(--muted);
+      font-size:12px;
+    }
+    .tag.active{border-color: rgba(176,137,104,.7); color: var(--text)}
+    .snippet{color: var(--text); opacity:.95}
+    .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .empty{padding:22px;text-align:center;color:var(--muted)}
+
+    .modalOverlay{
+      position:fixed; inset:0; z-index:50;
+      background: rgba(62,53,44,.25);
+      display:none; align-items:center; justify-content:center;
+      padding:18px;
+    }
+    .modal{
+      width: min(920px, 100%);
+      max-height: min(88vh, 900px);
+      overflow:auto;
+      background: rgba(255,250,243,.98);
+      border:1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      padding: 16px;
+      color: var(--text);
+    }
+    .modalHead{
+      display:flex;align-items:flex-start;justify-content:space-between;gap:10px;flex-wrap:wrap;
+      border-bottom:1px solid var(--line);
+      padding-bottom:12px;margin-bottom:12px;
+    }
+    .modalTitle{
+      margin:0;
+      font-size:26px;
+      font-weight:800;
+      font-family: ui-serif, Georgia, "Times New Roman", Times, serif;
+    }
+    .modalBody{color: var(--text); opacity:.97}
+    .modalBody p{margin: 0 0 12px}
+    .kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size:11px;color:var(--muted);
+      border:1px solid var(--line);
+      padding:2px 6px;border-radius:8px;
+      background: rgba(255,255,255,.7);
+    }
+    footer{
+      border-top:1px solid var(--line);
+      padding:16px 0;
+      color: var(--muted);
+      font-size:12px;
+    }
+  /* FIX: prevent hidden modal overlay from blocking clicks/typing */
+.grid, aside.card, main { position: relative; z-index: 1; }
+.modalOverlay { display: none; pointer-events: none; }
+.modalOverlay.isOpen { display: flex; pointer-events: auto; }
+/* HARD FIX: make sure nothing blocks typing/clicking inputs */
+input, select, textarea, button { pointer-events: auto !important; }
+aside.card { position: relative; z-index: 5; }
+
+/* overlay can never block clicks unless open */
+.modalOverlay { display: none !important; pointer-events: none !important; }
+.modalOverlay.isOpen { display: flex !important; pointer-events: auto !important; }
+
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="wrap topbar">
+    <div class="brand">
+      <div class="logoBox" title="Logo area">
+        <!-- Option A: drop your image in the folder and set src="logo.png" -->
+        <!-- <img src="logo.png" alt="Law Talk logo" /> -->
+
+        <!-- Option B: built-in monogram (default) -->
+        <div class="logoMonogram" aria-label="Law Talk monogram">LT</div>
+      </div>
+      <div>
+        <h1>Law Talk</h1>
+        <p>Insights • Cases • Commentary</p>
+      </div>
+    </div>
+
+    <nav aria-label="Primary">
+      <a class="navlink" href="index.html">Home</a>
+      <a class="navlink" href="about.html">About</a>
+      <a class="navlink" href="#" id="navContact">Contact</a>
+    </nav>
+
+    <div class="pill"><span class="dot"></span> Business law commentary and analysis</div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="heroCard">
+      <h2 class="heroTitle"> Legal Perspectives</h2>
+      <p class="heroSub">
+        Short legal commentary, case notes, and business-facing analysis 
+      </p>
+      <div class="badgeRow">
+        <button class="badge" type="button" id="badgeSearch"><strong>Search</strong> &amp; filter</button>
+        <button class="badge" type="button" id="badgeTags"><strong>Categories</strong> via tags</button>
+        <button class="badge" type="button" id="badgeReader"><strong>Readable</strong> post viewer</button>
+        <button class="badge" type="button" id="badgeAdmin"><strong>Owner</strong> admin mode</button>
+    </div>
+  </div>
+</section>
+
+<main>
+  <div class="wrap grid">
+    <aside class="card">
+      <h3>Browse</h3>
+
+      <label for="search">Search</label>
+      <input id="search" placeholder="Search title, tags, content..." />
+
+      <div class="row">
+        <div>
+          <label for="tagFilter">Category</label>
+          <select id="tagFilter">
+            <option value="">All</option>
+          </select>
+        </div>
+        <div>
+          <label for="sort">Sort</label>
+          <select id="sort">
+            <option value="newest">Newest</option>
+            <option value="oldest">Oldest</option>
+            <option value="title">Title (A–Z)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
+        <div>
+          <div style="font-size:12px;color:var(--muted);letter-spacing:.03em;text-transform:uppercase;font-weight:700;margin-bottom:6px;">
+            Admin mode
+          </div>
+          <div class="hint">For you only: create &amp; edit posts.</div>
+        </div>
+        <button id="toggleAdmin" class="ghost" aria-pressed="false">Off</button>
+      </div>
+
+      <div id="adminPanel" style="display:none;">
+        <div class="divider"></div>
+        <h3>Publish</h3>
+
+        <input type="hidden" id="editId" />
+
+        <label for="title">Title</label>
+        <input id="title" placeholder="e.g., What I learned from [Case Name]" />
+
+        <label for="tags">Categories (comma-separated)</label>
+        <input id="tags" placeholder="corporate, case-notes, governance" />
+
+        <label for="content">Content</label>
+        <textarea id="content" placeholder="Write your post..."></textarea>
+
+        <div class="row" style="margin-top:10px;">
+          <button id="save" class="primary">Publish</button>
+          <button id="cancel" class="ghost">Cancel</button>
+        </div>
+
+        <div class="row" style="margin-top:10px;">
+          <button id="seed">Add sample posts</button>
+          <button id="clearAll" class="danger">Clear all</button>
+        </div>
+
+        <div class="divider"></div>
+        <div class="small">
+          Posts save in your browser (localStorage). When you’re ready, I can convert this into a hosted blog with real post URLs.
+        </div>
+      </div>
+    </aside>
+
+    <section class="card">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:10px;flex-wrap:wrap;">
+        <div>
+          <h3 style="margin:0 0 6px;">Articles</h3>
+          <div class="small" id="countLabel"></div>
+        </div>
+        <div id="tagPills"></div>
+      </div>
+
+      <div class="divider"></div>
+      <div id="posts"></div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    © <span id="year"></span> Law Talk • All rights reserved
+  </div>
+</footer>
+
+<div class="modalOverlay" id="modalOverlay" role="dialog" aria-modal="true" aria-label="Post reader">
+  <div class="modal">
+    <div class="modalHead">
+      <div>
+        <h2 class="modalTitle" id="modalTitle"></h2>
+        <div class="meta" id="modalMeta"></div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <span class="kbd">Esc</span>
+        <button class="ghost" id="modalClose">Close</button>
+      </div>
+    </div>
+    <div class="modalBody" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+  const KEY = "lawtalk_posts_v2";
+  const elPosts = document.getElementById("posts");
+  const elSearch = document.getElementById("search");
+  const elSort = document.getElementById("sort");
+  const elTagFilter = document.getElementById("tagFilter");
+  const elTagPills = document.getElementById("tagPills");
+  const elCountLabel = document.getElementById("countLabel");
+
+  const btnToggleAdmin = document.getElementById("toggleAdmin");
+  const adminPanel = document.getElementById("adminPanel");
+
+  const inEditId = document.getElementById("editId");
+  const inTitle = document.getElementById("title");
+  const inTags = document.getElementById("tags");
+  const inContent = document.getElementById("content");
+
+  const btnSave = document.getElementById("save");
+  const btnCancel = document.getElementById("cancel");
+  const btnSeed = document.getElementById("seed");
+  const btnClearAll = document.getElementById("clearAll");
+
+  const modalOverlay = document.getElementById("modalOverlay");
+  const modalTitle = document.getElementById("modalTitle");
+  const modalMeta = document.getElementById("modalMeta");
+  const modalBody = document.getElementById("modalBody");
+  const modalClose = document.getElementById("modalClose");
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  function loadPosts(){
+    try { return JSON.parse(localStorage.getItem(KEY)) ?? []; }
+    catch { return []; }
+  }
+  function savePosts(posts){ localStorage.setItem(KEY, JSON.stringify(posts)); }
+
+  let posts = loadPosts();
+  let admin = false;
+
+  function uid(){ return Math.random().toString(16).slice(2) + Date.now().toString(16); }
+  function normalizeTags(raw){
+    return raw.split(",").map(t=>t.trim()).filter(Boolean).map(t=>t.toLowerCase());
+  }
+  function formatDate(iso){
+    const d = new Date(iso);
+    return d.toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"});
+  }
+  function escapeHtml(str){
+    return str.replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+  }
+  function allTags(){
+    const set = new Set();
+    posts.forEach(p => (p.tags||[]).forEach(t => set.add(t)));
+    return Array.from(set).sort((a,b)=>a.localeCompare(b));
+  }
+  function snippet(text, n=220){
+    const s = text.trim().replace(/\s+/g," ");
+    return s.length > n ? s.slice(0,n-1) + "…" : s;
+  }
+
+  function renderFilters(){
+    const tags = allTags();
+    const current = elTagFilter.value;
+
+    elTagFilter.innerHTML = `<option value="">All</option>` + tags.map(t => `<option value="${t}">${t}</option>`).join("");
+    if ([...elTagFilter.options].some(o => o.value === current)) elTagFilter.value = current;
+
+    const active = elTagFilter.value;
+    elTagPills.innerHTML = tags.slice(0, 10).map(t => `
+      <button class="tag ${t===active?'active':''}" data-tag="${t}" type="button">${escapeHtml(t)}</button>
+    `).join("");
+  }
+
+  function visiblePosts(){
+    const q = elSearch.value.trim().toLowerCase();
+    const tag = elTagFilter.value;
+
+    let list = posts.slice();
+    if (tag) list = list.filter(p => (p.tags||[]).includes(tag));
+
+    if (q){
+      list = list.filter(p => (p.title + " " + (p.tags||[]).join(" ") + " " + p.content).toLowerCase().includes(q));
+    }
+
+    const sort = elSort.value;
+    if (sort === "newest") list.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
+    if (sort === "oldest") list.sort((a,b)=>new Date(a.createdAt)-new Date(b.createdAt));
+    if (sort === "title") list.sort((a,b)=>a.title.localeCompare(b.title));
+    return list;
+  }
+
+  function renderPosts(){
+    renderFilters();
+    const list = visiblePosts();
+    elCountLabel.textContent = `${list.length} article${list.length===1?"":"s"} shown`;
+
+    if (!list.length){
+      elPosts.innerHTML = `<div class="empty">No articles found.</div>`;
+      return;
+    }
+
+    elPosts.innerHTML = list.map(p => `
+      <article class="post">
+        <h2>${escapeHtml(p.title)}</h2>
+        <div class="meta">
+          <span>${formatDate(p.createdAt)}</span>
+          <span>•</span>
+          ${(p.tags||[]).map(t=>`<span class="tag" style="pointer-events:none;">${escapeHtml(t)}</span>`).join(" ")}
+        </div>
+        <div class="snippet">${escapeHtml(snippet(p.content))}</div>
+
+        <div class="actions">
+          <button class="ghost" data-action="read" data-id="${p.id}">Read</button>
+          ${admin ? `
+            <button class="ghost" data-action="edit" data-id="${p.id}">Edit</button>
+            <button class="danger" data-action="delete" data-id="${p.id}">Delete</button>
+          ` : ""}
+        </div>
+      </article>
+    `).join("");
+  }
+
+  function setAdmin(on){
+    admin = on;
+    btnToggleAdmin.textContent = admin ? "On" : "Off";
+    btnToggleAdmin.setAttribute("aria-pressed", admin ? "true" : "false");
+    adminPanel.style.display = admin ? "block" : "none";
+    renderPosts();
+  }
+
+  function resetForm(){
+    inEditId.value = "";
+    inTitle.value = "";
+    inTags.value = "";
+    inContent.value = "";
+    btnSave.textContent = "Publish";
+  }
+
+  function fillForm(post){
+    inEditId.value = post.id;
+    inTitle.value = post.title;
+    inTags.value = (post.tags||[]).join(", ");
+    inContent.value = post.content;
+    btnSave.textContent = "Save changes";
+    adminPanel.scrollIntoView({behavior:"smooth",block:"start"});
+    inTitle.focus();
+  }
+
+  function openReader(post){
+  modalTitle.textContent = post.title;
+  modalMeta.innerHTML = `
+    <span>${formatDate(post.createdAt)}</span>
+    <span>•</span>
+    ${(post.tags||[]).map(t=>`<span class="tag" style="pointer-events:none;">${escapeHtml(t)}</span>`).join(" ")}
+  `;
+  modalBody.innerHTML = `<p>${escapeHtml(post.content).replace(/\n/g,"<br>")}</p>`;
+  modalOverlay.classList.add("isOpen");
+}
+
+function closeReader(){
+  modalOverlay.classList.remove("isOpen");
+}
+
+
+  btnToggleAdmin.addEventListener("click", ()=>setAdmin(!admin));
+  elSearch.addEventListener("input", renderPosts);
+  elSort.addEventListener("change", renderPosts);
+  elTagFilter.addEventListener("change", renderPosts);
+
+  elTagPills.addEventListener("click", (e)=>{
+    const btn = e.target.closest("button[data-tag]");
+    if(!btn) return;
+    const tag = btn.getAttribute("data-tag");
+    elTagFilter.value = (elTagFilter.value === tag) ? "" : tag;
+    renderPosts();
+  });
+
+  btnSave.addEventListener("click", ()=>{
+    const title = inTitle.value.trim();
+    const content = inContent.value.trim();
+    const tags = normalizeTags(inTags.value);
+
+    if(!title || !content){
+      alert("Please add a title and content.");
+      return;
+    }
+
+    const editing = inEditId.value;
+    if (editing){
+      const idx = posts.findIndex(p=>p.id===editing);
+      if (idx >= 0) posts[idx] = {...posts[idx], title, content, tags, updatedAt: new Date().toISOString()};
+    } else {
+      posts.unshift({ id: uid(), title, content, tags, createdAt: new Date().toISOString(), updatedAt: null });
+    }
+
+    savePosts(posts);
+    resetForm();
+    renderPosts();
+  });
+
+  btnCancel.addEventListener("click", resetForm);
+
+  btnSeed.addEventListener("click", ()=>{
+    const sample = [
+      {
+        id: uid(),
+        title: "Welcome to Law Talk",
+        content:
+`Purpose: a corporate-leaning legal blog written in a clean, professional style.
+
+Suggested formats:
+• Case notes (IRAC)
+• Governance & compliance updates
+• Short explainers for business audiences`,
+        tags: ["welcome","updates"],
+        createdAt: new Date().toISOString(),
+        updatedAt: null
+      },
+      {
+        id: uid(),
+        title: "IRAC Template for Case Notes",
+        content:
+`Issue:
+Rule:
+Application:
+Conclusion:
+
+Key takeaway (1–2 lines):
+Practical business implication:`,
+        tags: ["case-notes","corporate"],
+        createdAt: new Date(Date.now() - 86400000).toISOString(),
+        updatedAt: null
+      }
+    ];
+    posts = sample.concat(posts);
+    savePosts(posts);
+    renderPosts();
+  });
+
+  btnClearAll.addEventListener("click", ()=>{
+    if(!confirm("Delete ALL posts from this browser?")) return;
+    posts = [];
+    savePosts(posts);
+    resetForm();
+    renderPosts();
+  });
+
+  elPosts.addEventListener("click", (e)=>{
+    const btn = e.target.closest("button[data-action]");
+    if(!btn) return;
+
+    const action = btn.getAttribute("data-action");
+    const id = btn.getAttribute("data-id");
+    const post = posts.find(p=>p.id===id);
+    if(!post) return;
+
+    if (action === "read") openReader(post);
+    if (!admin) return;
+
+    if (action === "edit") fillForm(post);
+    if (action === "delete"){
+      if(!confirm(`Delete "${post.title}"?`)) return;
+      posts = posts.filter(p=>p.id!==id);
+      savePosts(posts);
+      renderPosts();
+    }
+  });
+
+  modalClose.addEventListener("click", closeReader);
+  modalOverlay.addEventListener("click", (e)=>{ if (e.target === modalOverlay) closeReader(); });
+  window.addEventListener("keydown", (e)=>{ if (e.key === "Escape") closeReader(); });
+
+  // Cosmetic: contact placeholder
+  document.getElementById("navContact").addEventListener("click",(e)=>{
+    e.preventDefault();
+    alert("If you want, I can add a contact page (contact.html) with a simple form layout.");
+  });
+
+  renderPosts();
+</script>
+</body>
+</html>
+
