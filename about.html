@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Law Talk | About</title>
+
+  <!-- If your homepage has a <style> block already, you can copy it here instead.
+       This one uses the same cream/brown system and “card” layout. -->
+  <style>
+    :root{
+      --bg:#f6f1e8;
+      --surface:#fffaf3;
+      --card:#ffffff;
+      --text:#3e352c;
+      --muted:#8a7a6a;
+      --line:rgba(62,53,44,.14);
+      --accent:#7a4f2a;     /* warm brown */
+      --accent2:#b37a43;    /* lighter brown */
+      --shadow:0 12px 30px rgba(40,30,20,.10);
+      --radius:18px;
+      --max:1050px;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      background: radial-gradient(1200px 500px at 20% -10%, rgba(179,122,67,.18), transparent 55%),
+                  radial-gradient(900px 500px at 90% 10%, rgba(122,79,42,.16), transparent 60%),
+                  var(--bg);
+      line-height:1.55;
+    }
+
+    a{ color:inherit; text-decoration:none; }
+    a:hover{ text-decoration:underline; }
+
+    .wrap{ max-width:var(--max); margin:0 auto; padding:22px 18px 60px; }
+
+    header{
+      background:linear-gradient(180deg, rgba(255,250,243,.95), rgba(255,250,243,.75));
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+      border-radius:var(--radius);
+      padding:18px 18px 14px;
+      position:sticky;
+      top:12px;
+      backdrop-filter: blur(6px);
+      z-index:10;
+    }
+
+    .top{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .brand{ display:flex; flex-direction:column; gap:4px; }
+    .brand h1{
+      margin:0;
+      font-size:28px;
+      letter-spacing:.3px;
+      color:var(--accent);
+    }
+    .brand .tagline{
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    nav{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:flex-end;
+    }
+    .navlink{
+      padding:8px 12px;
+      border-radius:12px;
+      border:1px solid transparent;
+      color:var(--text);
+    }
+    .navlink:hover{
+      background:rgba(179,122,67,.10);
+      border-color:rgba(179,122,67,.22);
+      text-decoration:none;
+    }
+    .navlink.active{
+      background:rgba(122,79,42,.10);
+      border-color:rgba(122,79,42,.24);
+      text-decoration:none;
+    }
+
+    .hero{
+      margin-top:18px;
+      background:linear-gradient(180deg, rgba(255,255,255,.9), rgba(255,255,255,.75));
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:22px 18px;
+    }
+    .hero h2{
+      margin:0 0 8px;
+      font-size:22px;
+      color:var(--accent);
+    }
+    .hero p{
+      margin:0;
+      color:var(--muted);
+      max-width:72ch;
+    }
+
+    .grid{
+      margin-top:16px;
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:14px;
+    }
+    @media (max-width: 860px){
+      .grid{ grid-template-columns:1fr; }
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:16px 16px 14px;
+    }
+    .card h3{
+      margin:0 0 10px;
+      font-size:16px;
+      color:var(--accent);
+      letter-spacing:.2px;
+    }
+    .card p{ margin:0 0 10px; color:var(--text); }
+    .card p:last-child{ margin-bottom:0; }
+
+    ul{
+      margin:10px 0 0;
+      padding-left:18px;
+      color:var(--text);
+    }
+    li{ margin:7px 0; }
+    .muted{ color:var(--muted); }
+
+    .pillrow{ display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+    .pill{
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(122,79,42,.22);
+      background:rgba(122,79,42,.08);
+      color:var(--text);
+      white-space:nowrap;
+    }
+
+    footer{
+      margin-top:18px;
+      color:var(--muted);
+      text-align:center;
+      font-size:13px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <div class="top">
+        <div class="brand">
+          <h1>Law Talk</h1>
+          <div class="tagline">Insights • Cases • Commentary</div>
+        </div>
+
+        <nav aria-label="Primary">
+          <a class="navlink" href="./index.html">Home</a>
+          <a class="navlink active" href="./about.html">About</a>
+          <a class="navlink" href="./contact.html">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <section class="hero">
+      <h2>About Law Talk</h2>
+      <p>
+        Law Talk is a business-facing law blog focused on cases, practical takeaways, and clear explanations—without the heavy “textbook” vibe.
+      </p>
+    </section>
+
+    <section class="grid">
+      <div class="card">
+        <h3>What you’ll find here</h3>
+        <p class="muted">Short, readable posts designed for students and curious readers.</p>
+        <ul>
+          <li><strong>Case notes</strong> that summarize what happened and why it mattered.</li>
+          <li><strong>Business law breakdowns</strong> (contracts, consumer law, competition, privacy, IP, employment).</li>
+          <li><strong>“So what?” takeaways</strong> for founders, managers, and everyday consumers.</li>
+          <li><strong>Links to primary sources</strong> (courts, regulators, official docs) when possible.</li>
+        </ul>
+
+        <div class="pillrow" aria-label="Topics">
+          <span class="pill">Business Law</span>
+          <span class="pill">Tech & IP</span>
+          <span class="pill">Competition</span>
+          <span class="pill">Privacy</span>
+          <span class="pill">Consumer</span>
+          <span class="pill">Employment</span>
+        </div>
+      </div>
+
+      <aside class="card">
+        <h3>Disclaimer</h3>
+        <p>
+          This blog is for general information and learning only. It is <strong>not legal advice</strong>, and reading it does not create a lawyer-client relationship.
+        </p>
+        <p class="muted">
+          If you need advice for a real situation, talk to a qualified professional in your jurisdiction.
+        </p>
+      </aside>
+
+      <div class="card">
+        <h3>Why I made this</h3>
+        <p>
+          I wanted a place to write about real-world cases in a way that’s quick to read, easy to understand, and actually useful for business/management contexts.
+        </p>
+        <p class="muted">
+          You can keep this section personal (your program, what you’re interested in) or keep it anonymous—both work.
+        </p>
+      </div>
+
+      <aside class="card">
+        <h3>Contact</h3>
+        <p class="muted">Have a case you want covered or a topic suggestion?</p>
+        <p>
+          Head to the <a href="./contact.html"><strong>Contact</strong></a> page.
+        </p>
+      </aside>
+    </section>
+
+    <footer>
+      © <span id="y">2026</span> Law Talk • All rights reserved
+    </footer>
+  </div>
+
+  <!-- No JS required; this tiny snippet is optional. If you don’t want any JS, delete this script and hardcode the year. -->
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
