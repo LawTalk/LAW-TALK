@@ -361,46 +361,8 @@ aside.card { position: relative; z-index: 5; }
       </div>
 
       <div class="divider"></div>
-
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
-        <div>
-          <div style="font-size:12px;color:var(--muted);letter-spacing:.03em;text-transform:uppercase;font-weight:700;margin-bottom:6px;">
-            Admin mode
-          </div>
-          <div class="hint">For you only: create &amp; edit posts.</div>
-        </div>
-        <button id="toggleAdmin" class="ghost" aria-pressed="false">Off</button>
-      </div>
-
-      <div id="adminPanel" style="display:none;">
-        <div class="divider"></div>
-        <h3>Publish</h3>
-
-        <input type="hidden" id="editId" />
-
-        <label for="title">Title</label>
-        <input id="title" placeholder="e.g., What I learned from [Case Name]" />
-
-        <label for="tags">Categories (comma-separated)</label>
-        <input id="tags" placeholder="corporate, case-notes, governance" />
-
-        <label for="content">Content</label>
-        <textarea id="content" placeholder="Write your post..."></textarea>
-
-        <div class="row" style="margin-top:10px;">
-          <button id="save" class="primary">Publish</button>
-          <button id="cancel" class="ghost">Cancel</button>
-        </div>
-
-        <div class="row" style="margin-top:10px;">
-          <button id="seed">Add sample posts</button>
-          <button id="clearAll" class="danger">Clear all</button>
-        </div>
-
-        <div class="divider"></div>
-        <div class="small">
-          Posts save in your browser (localStorage). When you’re ready, I can convert this into a hosted blog with real post URLs.
-        </div>
+      <div class="hint">
+        This is a read-only blog. New posts are published by the site owner.
       </div>
     </aside>
 
@@ -418,6 +380,7 @@ aside.card { position: relative; z-index: 5; }
     </section>
   </div>
 </main>
+
 
 <footer>
   <div class="wrap">
@@ -442,26 +405,12 @@ aside.card { position: relative; z-index: 5; }
 </div>
 
 <script>
-  const KEY = "lawtalk_posts_v2";
   const elPosts = document.getElementById("posts");
   const elSearch = document.getElementById("search");
   const elSort = document.getElementById("sort");
   const elTagFilter = document.getElementById("tagFilter");
   const elTagPills = document.getElementById("tagPills");
   const elCountLabel = document.getElementById("countLabel");
-
-  const btnToggleAdmin = document.getElementById("toggleAdmin");
-  const adminPanel = document.getElementById("adminPanel");
-
-  const inEditId = document.getElementById("editId");
-  const inTitle = document.getElementById("title");
-  const inTags = document.getElementById("tags");
-  const inContent = document.getElementById("content");
-
-  const btnSave = document.getElementById("save");
-  const btnCancel = document.getElementById("cancel");
-  const btnSeed = document.getElementById("seed");
-  const btnClearAll = document.getElementById("clearAll");
 
   const modalOverlay = document.getElementById("modalOverlay");
   const modalTitle = document.getElementById("modalTitle");
@@ -471,34 +420,45 @@ aside.card { position: relative; z-index: 5; }
 
   document.getElementById("year").textContent = new Date().getFullYear();
 
-  function loadPosts(){
-    try { return JSON.parse(localStorage.getItem(KEY)) ?? []; }
-    catch { return []; }
-  }
-  function savePosts(posts){ localStorage.setItem(KEY, JSON.stringify(posts)); }
+  // ✅ REAL posts list (everyone sees these)
+  // Add new posts by creating a file in /posts/ and adding an entry here.
+  const posts = [
+    {
+      id: "welcome",
+      title: "Welcome to Law Talk",
+      createdAt: "2026-02-15",
+      tags: ["welcome", "updates"],
+      snippet:
+        "Purpose: a corporate-leaning legal blog written in a clean, professional style. Suggested formats: case notes (IRAC), governance & compliance updates, and short explainers.",
+      file: "posts/welcome.html"
+    },
+    {
+      id: "irac-template",
+      title: "IRAC Template for Case Notes",
+      createdAt: "2026-02-14",
+      tags: ["case-notes", "corporate"],
+      snippet:
+        "Issue. Rule. Application. Conclusion. Plus a 1–2 line key takeaway and practical business implication.",
+      file: "posts/irac-template.html"
+    }
+  ];
 
-  let posts = loadPosts();
-  let admin = false;
-
-  function uid(){ return Math.random().toString(16).slice(2) + Date.now().toString(16); }
-  function normalizeTags(raw){
-    return raw.split(",").map(t=>t.trim()).filter(Boolean).map(t=>t.toLowerCase());
+  function escapeHtml(str){
+    return (str ?? "").toString().replace(/[&<>"']/g, c => ({
+      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+    }[c]));
   }
+
   function formatDate(iso){
+    // Accept "YYYY-MM-DD" or full ISO string
     const d = new Date(iso);
     return d.toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"});
   }
-  function escapeHtml(str){
-    return str.replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
-  }
+
   function allTags(){
     const set = new Set();
     posts.forEach(p => (p.tags||[]).forEach(t => set.add(t)));
     return Array.from(set).sort((a,b)=>a.localeCompare(b));
-  }
-  function snippet(text, n=220){
-    const s = text.trim().replace(/\s+/g," ");
-    return s.length > n ? s.slice(0,n-1) + "…" : s;
   }
 
   function renderFilters(){
@@ -522,7 +482,11 @@ aside.card { position: relative; z-index: 5; }
     if (tag) list = list.filter(p => (p.tags||[]).includes(tag));
 
     if (q){
-      list = list.filter(p => (p.title + " " + (p.tags||[]).join(" ") + " " + p.content).toLowerCase().includes(q));
+      list = list.filter(p => (
+        (p.title + " " + (p.tags||[]).join(" ") + " " + (p.snippet||""))
+        .toLowerCase()
+        .includes(q)
+      ));
     }
 
     const sort = elSort.value;
@@ -530,6 +494,31 @@ aside.card { position: relative; z-index: 5; }
     if (sort === "oldest") list.sort((a,b)=>new Date(a.createdAt)-new Date(b.createdAt));
     if (sort === "title") list.sort((a,b)=>a.title.localeCompare(b.title));
     return list;
+  }
+
+  async function openReaderFromFile(post){
+    modalTitle.textContent = post.title;
+    modalMeta.innerHTML = `
+      <span>${formatDate(post.createdAt)}</span>
+      <span>•</span>
+      ${(post.tags||[]).map(t=>`<span class="tag" style="pointer-events:none;">${escapeHtml(t)}</span>`).join(" ")}
+    `;
+
+    try{
+      const res = await fetch(post.file, { cache: "no-store" });
+      if(!res.ok) throw new Error("Could not load post file.");
+      const html = await res.text();
+      // Post files can contain normal HTML (recommended: <h1> removed; just content)
+      modalBody.innerHTML = html;
+    } catch (err){
+      modalBody.innerHTML = `<p>Sorry — this post couldn’t be loaded.</p>`;
+    }
+
+    modalOverlay.classList.add("isOpen");
+  }
+
+  function closeReader(){
+    modalOverlay.classList.remove("isOpen");
   }
 
   function renderPosts(){
@@ -550,62 +539,15 @@ aside.card { position: relative; z-index: 5; }
           <span>•</span>
           ${(p.tags||[]).map(t=>`<span class="tag" style="pointer-events:none;">${escapeHtml(t)}</span>`).join(" ")}
         </div>
-        <div class="snippet">${escapeHtml(snippet(p.content))}</div>
+        <div class="snippet">${escapeHtml(p.snippet || "")}</div>
 
         <div class="actions">
           <button class="ghost" data-action="read" data-id="${p.id}">Read</button>
-          ${admin ? `
-            <button class="ghost" data-action="edit" data-id="${p.id}">Edit</button>
-            <button class="danger" data-action="delete" data-id="${p.id}">Delete</button>
-          ` : ""}
         </div>
       </article>
     `).join("");
   }
 
-  function setAdmin(on){
-    admin = on;
-    btnToggleAdmin.textContent = admin ? "On" : "Off";
-    btnToggleAdmin.setAttribute("aria-pressed", admin ? "true" : "false");
-    adminPanel.style.display = admin ? "block" : "none";
-    renderPosts();
-  }
-
-  function resetForm(){
-    inEditId.value = "";
-    inTitle.value = "";
-    inTags.value = "";
-    inContent.value = "";
-    btnSave.textContent = "Publish";
-  }
-
-  function fillForm(post){
-    inEditId.value = post.id;
-    inTitle.value = post.title;
-    inTags.value = (post.tags||[]).join(", ");
-    inContent.value = post.content;
-    btnSave.textContent = "Save changes";
-    adminPanel.scrollIntoView({behavior:"smooth",block:"start"});
-    inTitle.focus();
-  }
-
-  function openReader(post){
-  modalTitle.textContent = post.title;
-  modalMeta.innerHTML = `
-    <span>${formatDate(post.createdAt)}</span>
-    <span>•</span>
-    ${(post.tags||[]).map(t=>`<span class="tag" style="pointer-events:none;">${escapeHtml(t)}</span>`).join(" ")}
-  `;
-  modalBody.innerHTML = `<p>${escapeHtml(post.content).replace(/\n/g,"<br>")}</p>`;
-  modalOverlay.classList.add("isOpen");
-}
-
-function closeReader(){
-  modalOverlay.classList.remove("isOpen");
-}
-
-
-  btnToggleAdmin.addEventListener("click", ()=>setAdmin(!admin));
   elSearch.addEventListener("input", renderPosts);
   elSort.addEventListener("change", renderPosts);
   elTagFilter.addEventListener("change", renderPosts);
@@ -618,76 +560,6 @@ function closeReader(){
     renderPosts();
   });
 
-  btnSave.addEventListener("click", ()=>{
-    const title = inTitle.value.trim();
-    const content = inContent.value.trim();
-    const tags = normalizeTags(inTags.value);
-
-    if(!title || !content){
-      alert("Please add a title and content.");
-      return;
-    }
-
-    const editing = inEditId.value;
-    if (editing){
-      const idx = posts.findIndex(p=>p.id===editing);
-      if (idx >= 0) posts[idx] = {...posts[idx], title, content, tags, updatedAt: new Date().toISOString()};
-    } else {
-      posts.unshift({ id: uid(), title, content, tags, createdAt: new Date().toISOString(), updatedAt: null });
-    }
-
-    savePosts(posts);
-    resetForm();
-    renderPosts();
-  });
-
-  btnCancel.addEventListener("click", resetForm);
-
-  btnSeed.addEventListener("click", ()=>{
-    const sample = [
-      {
-        id: uid(),
-        title: "Welcome to Law Talk",
-        content:
-`Purpose: a corporate-leaning legal blog written in a clean, professional style.
-
-Suggested formats:
-• Case notes (IRAC)
-• Governance & compliance updates
-• Short explainers for business audiences`,
-        tags: ["welcome","updates"],
-        createdAt: new Date().toISOString(),
-        updatedAt: null
-      },
-      {
-        id: uid(),
-        title: "IRAC Template for Case Notes",
-        content:
-`Issue:
-Rule:
-Application:
-Conclusion:
-
-Key takeaway (1–2 lines):
-Practical business implication:`,
-        tags: ["case-notes","corporate"],
-        createdAt: new Date(Date.now() - 86400000).toISOString(),
-        updatedAt: null
-      }
-    ];
-    posts = sample.concat(posts);
-    savePosts(posts);
-    renderPosts();
-  });
-
-  btnClearAll.addEventListener("click", ()=>{
-    if(!confirm("Delete ALL posts from this browser?")) return;
-    posts = [];
-    savePosts(posts);
-    resetForm();
-    renderPosts();
-  });
-
   elPosts.addEventListener("click", (e)=>{
     const btn = e.target.closest("button[data-action]");
     if(!btn) return;
@@ -697,23 +569,14 @@ Practical business implication:`,
     const post = posts.find(p=>p.id===id);
     if(!post) return;
 
-    if (action === "read") openReader(post);
-    if (!admin) return;
-
-    if (action === "edit") fillForm(post);
-    if (action === "delete"){
-      if(!confirm(`Delete "${post.title}"?`)) return;
-      posts = posts.filter(p=>p.id!==id);
-      savePosts(posts);
-      renderPosts();
-    }
+    if (action === "read") openReaderFromFile(post);
   });
 
   modalClose.addEventListener("click", closeReader);
   modalOverlay.addEventListener("click", (e)=>{ if (e.target === modalOverlay) closeReader(); });
   window.addEventListener("keydown", (e)=>{ if (e.key === "Escape") closeReader(); });
 
-  // Cosmetic: contact placeholder
+  // Contact placeholder
   document.getElementById("navContact").addEventListener("click",(e)=>{
     e.preventDefault();
     alert("If you want, I can add a contact page (contact.html) with a simple form layout.");
