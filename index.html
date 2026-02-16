@@ -312,7 +312,7 @@ aside.card { position: relative; z-index: 5; }
     <nav aria-label="Primary">
       <a class="navlink" href="index.html">Home</a>
       <a class="navlink" href="about.html">About</a>
-      <a class="navlink" href="#" id="navContact">Contact</a>
+     <a class="navlink" href="contact.html">Contact</a>
     </nav>
 
   
@@ -570,11 +570,7 @@ aside.card { position: relative; z-index: 5; }
   window.addEventListener("keydown", (e)=>{ if (e.key === "Escape") closeReader(); });
 
   // Contact placeholder
-  document.getElementById("navContact").addEventListener("click",(e)=>{
-    e.preventDefault();
-    alert("If you want, I can add a contact page (contact.html) with a simple form layout.");
-  });
-
+ 
   renderPosts();
 </script>
 </body>
