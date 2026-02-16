@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Law Talk | Contact</title>
+
+  <style>
+    :root{
+      --bg:#f6f1e8;
+      --card:#fffaf3;
+      --text:#3e352c;
+      --muted:#8a7a6a;
+      --line:#e6dccf;
+      --accent:#b08968;
+      --shadow: 0 10px 26px rgba(120,95,70,.10);
+      --radius:16px;
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.6;
+    }
+
+    .wrap{
+      max-width:800px;
+      margin:70px auto;
+      padding:20px;
+    }
+
+    h1{
+      font-family: Georgia, serif;
+      color:#9c6644;
+      margin-bottom:6px;
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:28px;
+      margin-top:20px;
+    }
+
+    .email{
+      font-size:16px;
+      margin:14px 0;
+      font-weight:600;
+    }
+
+    .muted{
+      color:var(--muted);
+    }
+
+    h2{
+      font-family: Georgia, serif;
+      color:#9c6644;
+      margin-top:30px;
+      margin-bottom:10px;
+    }
+
+    .disclaimer{
+      font-size:14px;
+      color:var(--muted);
+      line-height:1.6;
+      background:rgba(255,255,255,.6);
+      padding:16px;
+      border-radius:12px;
+      border:1px solid var(--line);
+    }
+
+    footer{
+      margin-top:40px;
+      font-size:12px;
+      color:var(--muted);
+      text-align:center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+
+    <h1>Contact</h1>
+
+    <div class="card">
+
+      <p>
+        I welcome thoughtful discussion, case suggestions, academic collaboration, and business-related legal inquiries.
+      </p>
+
+      <div class="email">
+        📧 sdursomarzo@gmail.com
+      </div>
+
+      <p class="muted">
+        Please allow a reasonable time for response.
+      </p>
+
+      <h2>Disclaimer</h2>
+
+      <div class="disclaimer">
+        The content published on Law Talk is provided for informational and educational purposes only. 
+        It does not constitute legal advice, and no attorney-client relationship is created through the use 
+        of this website or through communication via email. 
+
+        While efforts are made to ensure accuracy, laws and interpretations may change, and the information 
+        presented may not reflect the most current legal developments. Readers should consult a qualified 
+        legal professional for advice regarding their specific circumstances.
+
+        Opinions expressed on this site are those of the author and do not represent the views of any 
+        affiliated institution, employer, or organization.
+      </div>
+
+    </div>
+
+    <footer>
+      © 2026 Law Talk • All rights reserved
+    </footer>
+
+  </div>
+</body>
+</html>
